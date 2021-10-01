@@ -1,14 +1,25 @@
 const { ApolloServer } = require('apollo-server');
+const axios = require('axios');
 
 const typeDefs = `
+    type User {
+        id: Int!
+        email: String!
+        first_name: String!
+        last_name: String!
+        avatar: String!
+    }
     type Query{
-        greeting: String!
+        users: [User]
     }
 `
 
 const resolvers = {
     Query: {
-        greeting: () => "Hello world"
+        users: async() => {
+            const res = await axios.get('http://localhost:8000/users');
+            return res.data;
+        }
     }
 }
 
