@@ -1,25 +1,25 @@
-const { ApolloServer } = require('apollo-server');
+const { ApolloServer, gql } = require('apollo-server');
 const axios = require('axios');
+const fs = require('fs');
 
-const typeDefs = `
-    type User {
-        id: Int!
-        email: String!
-        first_name: String!
-        last_name: String!
-        avatar: String!
-    }
-    type Query{
-        users: [User]
-    }
-`
+const typeDefs = gql(fs.readFileSync('./schema.graphql', { encoding: 'utf8'}))
 
 const resolvers = {
     Query: {
-        users: async() => {
-            const res = await axios.get('http://localhost:8000/users');
+        players: async() => {
+            const res = await axios.get('http://localhost:8000/players');
             return res.data;
+        },
+        playerById: async(root, args) => {
+            const res = await axios.get(`http://localhost:8000/players/${args.id}`);
+            return res.data ? res.data: null
         }
+    },
+    Player: {
+        team: async (player) => {
+            const res = await axios.get(`http://localhost:8000/teams/${player.teamId}`);
+            return res.data;
+        } 
     }
 }
 

@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "name": "MI",
+        "league": "IPL"
+    },
+    {
+        "id": 2,
+        "name": "BARCA",
+        "league": "LaLiga"
+    }
+]

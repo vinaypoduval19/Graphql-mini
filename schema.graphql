@@ -1,0 +1,17 @@
+type Player {
+    id: Int!
+    first_name: String!
+    last_name: String!
+    avatar: String!
+    team: Team
+}
+
+type Team {
+    id: Int!
+    name: String!
+    league: String!
+}
+type Query{
+    players: [Player]
+    playerById(id: Int!): Player
+}
